@@ -1,0 +1,20 @@
+# Example graph using adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+# DFS implementation
+stack = ['A']  # Starting node
+visited = set()
+
+while stack:
+    node = stack.pop()
+    if node not in visited:
+        print(node, end=" ")  # Processing the node
+        visited.add(node)
+        stack.extend(reversed(graph[node]))  # Add all adjacent nodes to the stack

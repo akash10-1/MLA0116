@@ -1,0 +1,21 @@
+from itertools import permutations
+
+# Distance matrix
+graph = [[0, 10, 15, 20],
+         [10, 0, 35, 25],
+         [15, 35, 0, 30],
+         [20, 25, 30, 0]]
+
+# All cities
+vertices = list(range(4))
+
+# Store all possible tours and calculate their distances
+min_path = float('inf')
+for perm in permutations(vertices):
+    current_path_weight = 0
+    for i in range(len(perm)-1):
+        current_path_weight += graph[perm[i]][perm[i+1]]
+    current_path_weight += graph[perm[-1]][perm[0]]  # Returning to the starting city
+    min_path = min(min_path, current_path_weight)
+
+print("Minimum distance to visit all cities:", min_path)

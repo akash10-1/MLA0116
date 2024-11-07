@@ -1,0 +1,23 @@
+from collections import deque
+
+# Example graph using adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+# BFS implementation
+queue = deque(['A'])  # Starting node
+visited = set()
+
+while queue:
+    node = queue.popleft()
+    if node not in visited:
+        print(node, end=" ")  # Processing the node
+        visited.add(node)
+        queue.extend(graph[node])  # Add all adjacent nodes to the queue
+ 

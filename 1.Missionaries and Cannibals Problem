@@ -1,0 +1,55 @@
+from collections import deque
+
+# Check if the state is valid
+def is_valid(state):
+    m1, c1, m2, c2, boat = state
+    if m1 >= 0 and m2 >= 0 and c1 >= 0 and c2 >= 0:
+        if (m1 == 0 or m1 >= c1) and (m2 == 0 or m2 >= c2):
+            return True
+    return False
+
+# Solve the Missionaries and Cannibals problem
+def missionaries_and_cannibals():
+    start = (3, 3, 0, 0, 1)  # (Missionaries left, Cannibals left, Missionaries right, Cannibals right, Boat side)
+    goal = (0, 0, 3, 3, 0)
+    
+    queue = deque([start])
+    visited = set()
+    visited.add(start)
+    
+    while queue:
+        state = queue.popleft()
+        
+        if state == goal:
+            print("Solution found:", state)
+            return
+        
+        m1, c1, m2, c2, boat = state
+        
+        # Possible moves
+        if boat == 1:  # Boat on the left side
+            new_states = [
+                (m1-2, c1, m2+2, c2, 0),  # Move 2 missionaries
+                (m1-1, c1, m2+1, c2, 0),  # Move 1 missionary
+                (m1, c1-2, m2, c2+2, 0),  # Move 2 cannibals
+                (m1, c1-1, m2, c2+1, 0),  # Move 1 cannibal
+                (m1-1, c1-1, m2+1, c2+1, 0)  # Move 1 missionary and 1 cannibal
+            ]
+        else:  # Boat on the right side
+            new_states = [
+                (m1+2, c1, m2-2, c2, 1),  # Move 2 missionaries
+                (m1+1, c1, m2-1, c2, 1),  # Move 1 missionary
+                (m1, c1+2, m2, c2-2, 1),  # Move 2 cannibals
+                (m1, c1+1, m2, c2-1, 1),  # Move 1 cannibal
+                (m1+1, c1+1, m2-1, c2-1, 1)  # Move 1 missionary and 1 cannibal
+            ]
+        
+        for new_state in new_states:
+            if is_valid(new_state) and new_state not in visited:
+                visited.add(new_state)
+                queue.append(new_state)
+    
+    print("No solution found")
+
+# Run the solution
+missionaries_and_cannibals()

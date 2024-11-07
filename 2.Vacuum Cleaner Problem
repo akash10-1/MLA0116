@@ -1,0 +1,31 @@
+import random
+
+# Define the environment
+environment = [[random.choice([0, 1]) for _ in range(2)] for _ in range(2)]  # 0 = clean, 1 = dirty
+vacuum_position = [0, 0]  # Start in top-left corner
+
+def display_environment():
+    for row in environment:
+        print(row)
+
+# Vacuum cleaner agent
+def vacuum_cleaner():
+    global vacuum_position
+    for i in range(2):
+        for j in range(2):
+            vacuum_position = [i, j]
+            print("\nVacuum at position:", vacuum_position)
+            if environment[i][j] == 1:
+                print("Dirty! Cleaning...")
+                environment[i][j] = 0  # Clean the tile
+            else:
+                print("Already clean.")
+            display_environment()
+
+print("Initial environment:")
+display_environment()
+
+vacuum_cleaner()
+
+print("\nFinal environment:")
+display_environment()

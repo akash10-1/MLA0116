@@ -1,0 +1,13 @@
+# List of players' scores
+scores = [150, 230, 125, 475, 300, 200]
+
+# Initialize max_score with the first score
+max_score = scores[0]
+
+# Loop through each score in the list
+for score in scores:
+    # Check if the current score is greater than max_score
+    if score > max_score:
+        max_score = score  # Update max_score
+
+print("The maximum score is:", max_score)

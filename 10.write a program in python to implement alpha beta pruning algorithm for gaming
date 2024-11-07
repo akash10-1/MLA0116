@@ -1,0 +1,43 @@
+# Function to implement the minimax algorithm with alpha-beta pruning
+def alpha_beta_pruning(depth, node_index, is_max_player, values, alpha, beta):
+    # If we reach the depth limit (terminal node), return the leaf node value
+    if depth == 3:
+        return values[node_index]
+    
+    if is_max_player:
+        max_eval = float('-inf')
+        
+        # Explore the children of the max player node
+        for i in range(2):
+            eval = alpha_beta_pruning(depth + 1, node_index * 2 + i, False, values, alpha, beta)
+            max_eval = max(max_eval, eval)
+            alpha = max(alpha, eval)
+            
+            # Prune the branch if beta <= alpha
+            if beta <= alpha:
+                break
+        
+        return max_eval
+    else:
+        min_eval = float('inf')
+        
+        # Explore the children of the min player node
+        for i in range(2):
+            eval = alpha_beta_pruning(depth + 1, node_index * 2 + i, True, values, alpha, beta)
+            min_eval = min(min_eval, eval)
+            beta = min(beta, eval)
+            
+            # Prune the branch if beta <= alpha
+            if beta <= alpha:
+                break
+        
+        return min_eval
+
+# Leaf node values at the bottom of the game tree (you can modify as per game)
+values = [3, 5, 6, 9, 1, 2, 0, -1]
+
+# Initial call to alpha-beta pruning
+# Starting at root node index 0, as max player, with alpha = -infinity and beta = +infinity
+optimal_value = alpha_beta_pruning(0, 0, True, values, float('-inf'), float('inf'))
+
+print("The optimal value is:", optimal_value)

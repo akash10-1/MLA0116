@@ -1,0 +1,38 @@
+# Example map (nodes represent regions, edges represent adjacency)
+graph = {
+    'A': ['B', 'C', 'D'],
+    'B': ['A', 'C'],
+    'C': ['A', 'B', 'D'],
+    'D': ['A', 'C']
+}
+
+colors = ['Red', 'Green', 'Blue']
+assignment = {}
+
+def is_valid(node, color):
+    for neighbor in graph[node]:
+        if neighbor in assignment and assignment[neighbor] == color:
+            return False
+    return True
+
+def map_coloring(node):
+    if node is None:
+        return True
+    
+    for color in colors:
+        if is_valid(node, color):
+            assignment[node] = color
+            # Recur for next uncolored node
+            next_node = None
+            for neighbor in graph:
+                if neighbor not in assignment:
+                    next_node = neighbor
+                    break
+            if map_coloring(next_node):
+                return True
+            del assignment[node]  # Backtrack
+    return False
+
+# Start map coloring
+map_coloring('A')
+print("Map coloring assignment:", assignment)
